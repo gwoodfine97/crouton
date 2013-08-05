@@ -51,8 +51,8 @@ error() {
 # In the case of interrupts, exit is called to avoid the script continuing.
 # $1 must either be empty or end in a semicolon.
 settrap() {
-    trap "set +e; trap - INT HUP 0; $1 exit 2" INT HUP
-    trap "set +e; trap - INT HUP 0; $1" 0
+    trap "set +e; trap - INT HUP TERM 0; $1 exit 2" INT HUP TERM
+    trap "set +e; trap - INT HUP TERM 0; $1" 0
 }
 
 # Prepend a command to the existing $TRAP

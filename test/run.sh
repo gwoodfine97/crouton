@@ -97,7 +97,7 @@ host() {
 # $1 exit code to expect
 # $2 number of seconds within which the command should exit
 # $3+ command to run
-exitwithin() {
+exitswithin() {
     local code="$1" seconds="$2" ret=0
     shift 2
     echo "Expecting '$*' to exit with code $code within $seconds seconds"
@@ -124,7 +124,7 @@ exitwithin() {
 # If the command survives longer than X seconds, kills it with SIGINT
 # $1 number of seconds the command should survive
 # $2+ command to run
-exitwithin() {
+runslongerthan() {
     local seconds="$1" ret=0
     shift
     echo "Expecting '$*' to survive longer than $seconds seconds"

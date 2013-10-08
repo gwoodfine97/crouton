@@ -53,11 +53,11 @@ test() {
     fi
 }
 
-# Launches the installer with the specified parameters
+# Launches the installer with the specified parameters; auto-includes -p
 crouton() {
     local ret='0'
     echo "LAUNCHING: crouton $*"
-    sh -e "$SCRIPTDIR/installer/main.sh" "$@" || ret="$?"
+    sh -e "$SCRIPTDIR/installer/main.sh" -p "$PREFIX" "$@" || ret="$?"
     if [ "$ret" != 0 ]; then
         echo "FAILED with code $ret: crouton $*" 1>&2
     fi

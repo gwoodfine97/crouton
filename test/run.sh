@@ -152,7 +152,6 @@ SUPPORTED_RELEASES="`awk '/[^*]$/ { printf $1 " " }' \
 
 # Default responses to questions
 export CROUTON_USERNAME='test'
-export CROUTON_NO_PASSWORD='y'
 export CROUTON_PASSPHRASE='hunter2'
 export CROUTON_NEW_PASSPHRASE="$CROUTON_PASSPHRASE"
 export CROUTON_EDIT_RESPONSE='y'

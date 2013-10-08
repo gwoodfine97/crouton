@@ -14,6 +14,11 @@ PREFIX="$TESTDIR/crouton prefix"
 # Common functions
 . "$SCRIPTDIR/installer/functions"
 
+# We need to run as root
+if [ ! "$USER" = root -a ! "$UID" = 0 ]; then
+    error 2 "${0##*/} must be run as root."
+fi
+
 echo "Running tests in $TESTDIR"
 
 # Logs all output to the specified file with the date and time prefixed.
@@ -149,7 +154,7 @@ SUPPORTED_RELEASES="`awk '/[^*]$/ { printf $1 " " }' \
 mkdir -p "$PREFIX"
 addtrap "echo 'Cleaning up...' 1>&2; rm -rf --one-file-system '$PREFIX' || true"
 
-for t in "$TESTDIR/tests"/*; do
+for t in "$SCRIPTDIR/test/tests"/*; do
     if [ ! -s "$t" ]; then
         continue
     fi

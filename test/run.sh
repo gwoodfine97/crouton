@@ -150,6 +150,15 @@ runslongerthan() {
 SUPPORTED_RELEASES="`awk '/[^*]$/ { printf $1 " " }' \
                          "$SCRIPTDIR/installer/"*"/releases"`"
 
+# Default responses to questions
+export CROUTON_USERNAME='test'
+export CROUTON_NO_PASSWORD='y'
+export CROUTON_PASSPHRASE='hunter2'
+export CROUTON_NEW_PASSPHRASE="$CROUTON_PASSPHRASE"
+export CROUTON_EDIT_RESPONSE='y'
+export CROUTON_MOUNT_RESPONSE='y'
+export CROUTON_UNMOUNT_RESPONSE='y'
+
 # Run all the tests
 mkdir -p "$PREFIX"
 addtrap "echo 'Cleaning up...' 1>&2; rm -rf --one-file-system '$PREFIX' || true"

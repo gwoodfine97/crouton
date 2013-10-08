@@ -126,10 +126,13 @@ for NAME in "$@"; do
             error 2 'STDIN is not a terminal; cannot request passwords.'
         fi
 
-        # Ensure that there's a root password set before decrypting the chroot
+        # Ensure that there's a root password set before decrypting the chroot,
+        # unless the passphrase was specified via env, which isn't secure anyway
         if [ ! -f '/mnt/stateful_partition/etc/devmode.passwd' ]; then
             echo 'You must have a root password in Chromium OS to mount encrypted chroots.' 1>&2
-            chromeos-setdevpasswd
+            if [ -z "$CROUTON_PASSPHRASE$CROUTON_NEW_PASSPHRASE" ]; then
+                chromeos-setdevpasswd
+            fi
         fi
 
         # Detect the key file

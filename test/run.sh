@@ -170,6 +170,7 @@ if [ "$#" = 0 ]; then
 fi
 
 # Run all tests matching the supplied prefixes
+tname=''
 for p in "$@"; do
     for t in "$SCRIPTDIR/test/tests/$p"*; do
         if [ ! -s "$t" ]; then
@@ -181,4 +182,9 @@ for p in "$@"; do
     done
 done
 
-echo "All tests passed!" 1>&2
+if [ -n "$tname" ]; then
+    echo "All tests passed!" 1>&2
+else
+    echo "No tests found matching $*" 1>&2
+    exit 2
+fi

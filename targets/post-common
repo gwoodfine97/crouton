@@ -42,10 +42,15 @@ if ! grep -q ':1000:' /etc/passwd; then
             echo 'Username must be lowercase letters, numbers, or dashes.' 1>&2
         fi
         echo -n 'Please specify a username for the primary user: ' 1>&2
-        read username junk
+        if [ -n "$CROUTON_USERNAME" ]; then
+            username="$CROUTON_USERNAME"
+            echo "$username"
+        else
+            read username junk
+        fi
     done
     useradd -u 1000 -G "$groups" -s '/bin/bash' -m "$username"
-    tries=0
+    tries="0${CROUTON_NO_PASSWORD:+3}"
     while [ "$tries" -lt 3 ] && ! passwd "$username"; do
         tries="$((tries+1))"
     done

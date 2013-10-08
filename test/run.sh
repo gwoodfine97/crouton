@@ -7,9 +7,10 @@
 
 SCRIPTDIR="`readlink -f "\`dirname "$0"\`/.."`"
 TESTDIR="$SCRIPTDIR/test/run"
-TESTDIR="$TESTDIR/`sh -e "$SCRIPTDIR/build/genversion.sh" test`"
-# PREFIX intentionally includes a space
-PREFIX="$TESTDIR/crouton prefix"
+TESTNAME="`sh -e "$SCRIPTDIR/build/genversion.sh" test`"
+TESTDIR="$TESTDIR/$TESTNAME"
+# PREFIX intentionally includes a space. Run in /usr/local to avoid encryption
+PREFIX="/usr/local/$TESTNAME prefix"
 
 # Common functions
 . "$SCRIPTDIR/installer/functions"
@@ -19,7 +20,8 @@ if [ ! "$USER" = root -a ! "$UID" = 0 ]; then
     error 2 "${0##*/} must be run as root."
 fi
 
-echo "Running tests in $TESTDIR"
+echo "Running tests in $PREFIX"
+echo "Logging to $TESTDIR"
 
 # Logs all output to the specified file with the date and time prefixed.
 # File is always appended.
@@ -159,7 +161,7 @@ export CROUTON_MOUNT_RESPONSE='y'
 export CROUTON_UNMOUNT_RESPONSE='y'
 
 # Run all the tests
-mkdir -p "$PREFIX"
+mkdir -p "$TESTDIR" "$PREFIX"
 addtrap "echo 'Cleaning up...' 1>&2; rm -rf --one-file-system '$PREFIX' || true"
 
 for t in "$SCRIPTDIR/test/tests"/*; do

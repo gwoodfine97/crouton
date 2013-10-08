@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-# Provides common functions and then runs all of the tests in tests/
+# Provides common functions and variables, then runs all of the tests in tests/
 
 SCRIPTDIR="`readlink -f "\`dirname "$0"\`/.."`"
 TESTDIR="$SCRIPTDIR/test/run"
@@ -52,7 +52,6 @@ test() {
         return 1
     fi
 }
-
 
 # Launches the installer with the specified parameters
 crouton() {
@@ -141,6 +140,10 @@ runslongerthan() {
     fi
     return 0
 }
+
+# Prepare a variable with all of the supported releases
+SUPPORTED_RELEASES="`awk '/[^*]$/ { printf $1 " " }' \
+                         "$SCRIPTDIR/installer/"*"/releases"`"
 
 # Run all the tests
 mkdir -p "$PREFIX"

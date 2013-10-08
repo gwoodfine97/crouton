@@ -7,7 +7,7 @@
 
 SCRIPTDIR="`readlink -f "\`dirname "$0"\`/.."`"
 TESTDIR="$SCRIPTDIR/test/run"
-TESTDIR="$TESTDIR/`sh -e "$TESTDIR/../../build/genversion.sh" test`"
+TESTDIR="$TESTDIR/`sh -e "$SCRIPTDIR/build/genversion.sh" test`"
 # PREFIX intentionally includes a space
 PREFIX="$TESTDIR/crouton prefix"
 

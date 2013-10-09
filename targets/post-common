@@ -44,7 +44,7 @@ if ! grep -q ':1000:' /etc/passwd; then
         echo -n 'Please specify a username for the primary user: ' 1>&2
         if [ -n "$USERNAME" ]; then
             username="$USERNAME"
-            echo "$username"
+            echo "$username" 1>&2
         else
             read username junk
         fi

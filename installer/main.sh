@@ -213,7 +213,7 @@ if [ -z "$DOWNLOADONLY" -a -n "$TARBALL" ]; then
             NAME="$releasearch"
         fi
     fi
-elif [ -n "$DOWNLOADONLY" -a -e "$TARBALL" ]; then
+elif [ -n "$DOWNLOADONLY" -a -s "$TARBALL" ]; then
     error 2 "$TARBALL already exists; refusing to overwrite it!"
 fi
 

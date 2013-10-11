@@ -107,7 +107,7 @@ snapshot() {
         # Use flock so that snapshot can ba called in parallel
         if flock -n 3 && [ ! -s "$file" ]; then
             crouton -f "`bootstrap "$1"`" -t "$targets" -n "$name" 1>&2
-            host edit-chroot -y -b "$name" -f "$file"
+            host edit-chroot -y -b -f "$file" "$name"
             return 0
         else
             echo "Waiting for snapshot for $1-$targets to complete..." 1>&2

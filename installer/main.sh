@@ -348,7 +348,7 @@ Either delete it, specify a different name (-n), or specify -u to update it."
     fi
 
     # Restore the chroot now
-    if [ -n "RESTORE" ]; then
+    if [ -n "$RESTORE" ]; then
         sh -e "$HOSTBINDIR/edit-chroot" -r -f "$TARBALL" -c "$CHROOTS" "$NAME"
     fi
 

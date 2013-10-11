@@ -550,24 +550,18 @@ fi
 # Reset the installed target list files
 echo "$TARGETS" > "$TARGETSFILE"
 echo -n '' > "$TARGETDEDUPFILE"
-
-# Run each target, appending stdout to the prepare script, unless we're
-# restoring and not updating, in which case we don't bother running prepare.sh
-preparesh="$CHROOT/prepare.sh"
-if [ -n "$RESTORE" -a -z "$UPDATE" ]; then
-    preparesh='/dev/null'
-fi
+# Run each target, appending stdout to the prepare script.
 unset SIMULATE
 if [ -n "$TARGETFILE" ]; then
     TARGET="`readlink -f "$TARGETFILE"`"
-    (. "$TARGET") >> "$preparesh"
+    (. "$TARGET") >> "$CHROOT/prepare.sh"
 fi
 t="${TARGETS%,},post-common,"
 while [ -n "$t" ]; do
     TARGET="${t%%,*}"
     t="${t#*,}"
     if [ -n "$TARGET" ]; then
-        (. "$TARGETSDIR/$TARGET") >> "$preparesh"
+        (. "$TARGETSDIR/$TARGET") >> "$CHROOT/prepare.sh"
     fi
 done
 
@@ -576,6 +570,9 @@ if [ -z "$RESTORE" -o -n "$UPDATE" ]; then
 
     # Run the setup script inside the chroot
     sh -e "$HOSTBINDIR/enter-chroot" -c "$CHROOTS" -n "$NAME" -xx
+else
+    # We don't actually need to run the prepare.sh when only restoring
+    rm -f "$CHROOT/prepare.sh"
 fi
 
 echo "Done! You can enter the chroot using enter-chroot." 1>&2
